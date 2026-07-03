@@ -25,6 +25,43 @@ For architecture, testing, or setup work, also read the matching reference:
 For UI or UX work, read `docs/UIUX-GUIDE.md` and `DESIGN.md` before
 changing layout, interaction flow, themes, chat rendering, or composer chrome.
 
+## Hermes Android / Mobile Client track
+
+Hermes Android work is remote-first unless an issue explicitly says otherwise.
+The Android surface is a mobile PWA or app wrapper that connects to a
+workstation-hosted Hermes WebUI / Hermes Agent runtime. Do not attempt to embed
+or port the full Hermes Agent runtime, Python environment, local tools, or model
+execution onto Android in ordinary Hermes Android tasks.
+
+Repository ownership for this track:
+
+- `TojotheTerror/hermes-webui` is the writable home for PWA, mobile UI, remote
+  access docs, Android wrapper docs, and WebUI behavior.
+- `TojotheTerror/hermes-agent` is writable only for explicitly scoped
+  runtime/API changes that cannot be solved in WebUI.
+- Upstream repositories such as `NousResearch/hermes-agent` and
+  `NousResearch/hermes-webui` are read/reference only. Never push branches,
+  commits, tags, issues, labels, pull requests, releases, workflow changes, or
+  project metadata to upstream repositories.
+
+When an upstream checkout is useful for comparison, configure it as fetch-only.
+Local clones should disable upstream pushes, for example:
+
+```bash
+git remote add upstream https://github.com/NousResearch/hermes-webui.git
+git remote set-url --push upstream DISABLED
+```
+
+All implementation branches for this project must live in a `TojotheTerror/*`
+fork. Prefer branch names under `hermes-android/` or `codex/hermes-android/`.
+Any command, tool call, automation, or Codex action that would write to an
+upstream `NousResearch/*` repository must stop before execution and report the
+unsafe target.
+
+Human review is required before changes that affect authentication, CSRF,
+service-worker caching rules, remote exposure defaults, runtime/API boundaries,
+Android signing/distribution assets, or project automation hooks.
+
 ## Onboarding and reinstall support
 
 If the task involves install, reinstall, bootstrap, first-run onboarding,
