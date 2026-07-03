@@ -1,0 +1,44 @@
+# Repository label manifest for Hermes Android / Mobile Client work.
+# Apply manually through GitHub Settings > Labels, or with GitHub CLI, e.g.:
+# gh label create "needs triage" --color ededed --description "New issue awaiting initial review"
+# gh label edit "needs triage" --color ededed --description "New issue awaiting initial review"
+
+- name: bug
+  color: d73a4a
+  description: Something is broken or behaving incorrectly.
+
+- name: enhancement
+  color: a2eeef
+  description: New capability, improvement, or product-facing change.
+
+- name: documentation
+  color: 0075ca
+  description: Documentation, examples, wiki, guides, or release-note work.
+
+- name: good first issue
+  color: 7057ff
+  description: Small, well-scoped task suitable for a first contribution.
+
+- name: question
+  color: d876e3
+  description: Question, clarification, or support-style discussion.
+
+- name: android
+  color: 0e8a16
+  description: Android browser, PWA, wrapper, or mobile-client work.
+
+- name: "priority: high"
+  color: b60205
+  description: High-priority issue that should be triaged or fixed promptly.
+
+- name: needs triage
+  color: ededed
+  description: New issue awaiting initial review and routing.
+
+- name: "status:ready-for-codex"
+  color: 5319e7
+  description: Human-approved issue ready for Codex or automation execution.
+
+- name: "status:blocked"
+  color: fbca04
+  description: Work is blocked by a dependency, decision, credential, or human gate.
