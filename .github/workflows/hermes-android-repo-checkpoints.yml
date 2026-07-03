@@ -1,0 +1,47 @@
+name: Hermes Android repository checkpoints
+
+on:
+  pull_request:
+    paths:
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/labels.yml"
+      - ".github/scripts/check_hermes_android_repo_setup.py"
+      - ".github/workflows/hermes-android-repo-checkpoints.yml"
+      - ".github/workflows/publish-wiki.yml"
+      - ".github/workflows/sync-labels.yml"
+      - "docs/hermes-android/**"
+      - "docs/wiki/**"
+  push:
+    branches:
+      - Hermes-WebUI-Android
+      - main
+      - master
+    paths:
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/labels.yml"
+      - ".github/scripts/check_hermes_android_repo_setup.py"
+      - ".github/workflows/hermes-android-repo-checkpoints.yml"
+      - ".github/workflows/publish-wiki.yml"
+      - ".github/workflows/sync-labels.yml"
+      - "docs/hermes-android/**"
+      - "docs/wiki/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checkpoint:
+    name: Validate repository setup and wiki source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run repository checkpoint script
+        run: python .github/scripts/check_hermes_android_repo_setup.py

@@ -1,0 +1,78 @@
+name: Feature request
+description: Propose a new Hermes WebUI, mobile/PWA, or Android wrapper capability.
+title: "[Feature]: "
+labels:
+  - enhancement
+  - needs triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hermes Android work is remote-first by default. The phone is the client surface; the workstation/server remains the runtime owner.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or user need
+      description: What user problem should this solve?
+      placeholder: Describe the workflow gap or pain point.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the feature at the product level.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target-surface
+    attributes:
+      label: Target surface
+      options:
+        - Android browser / PWA
+        - Thin Android wrapper / TWA
+        - Desktop WebUI
+        - Remote access / connection setup
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: List the observable outcomes that would make this complete.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Mention simpler options, workarounds, or rejected approaches.
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks, security, or compatibility notes
+      description: Note auth, CSRF, service-worker caching, remote exposure, runtime/API, or Android signing concerns.
+
+  - type: checkboxes
+    id: runtime-boundary
+    attributes:
+      label: Runtime boundary checks
+      options:
+        - label: This keeps agent execution, tools, sessions, memory, cron, and models on the workstation/server.
+          required: true
+        - label: This does not require writing to an upstream `NousResearch/*` repository.
+          required: true
+        - label: I identified whether human review is needed for auth, remote exposure, service-worker, runtime/API, signing, or automation-hook changes.
+          required: true
