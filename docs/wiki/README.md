@@ -1,32 +1,40 @@
 # GitHub Wiki seed
 
-These Markdown files are seed pages for the GitHub Wiki attached to `TojotheTerror/hermes-webui`.
+These Markdown files are source pages for the GitHub Wiki attached to `TojotheTerror/hermes-webui`.
 
-The GitHub Wiki is stored separately from the main repository. Review these files in a normal pull request, then publish them by copying the pages into the Wiki UI or by pushing them to `TojotheTerror/hermes-webui.wiki`.
+The GitHub Wiki is stored separately from the main repository. Review these files in a normal pull request, then publish them with the `Publish GitHub Wiki` workflow or by updating the wiki repository directly.
 
 ## Page map
 
 | File | Wiki page |
 | --- | --- |
 | `Home.md` | Home |
+| `_Sidebar.md` | custom sidebar navigation |
+| `_Footer.md` | custom footer |
 | `Project-Setup.md` | Project Setup |
 | `Build-Instructions.md` | Build Instructions |
 | `Architecture-Overview.md` | Architecture Overview |
+| `Roadmap.md` | Roadmap |
+| `Issue-and-Label-Triage.md` | Issue and Label Triage |
 | `Contribution-Guide.md` | Contribution Guide |
-| `Release-Notes.md` | Release Notes |
+| `Codex-Readiness.md` | Codex Readiness |
+| `Mobile-PWA-Checklist.md` | Mobile PWA Checklist |
+| `Security-and-Remote-Access.md` | Security and Remote Access |
 | `Troubleshooting.md` | Troubleshooting |
+| `Release-Notes.md` | Release Notes |
+| `Wiki-Maintenance.md` | Wiki Maintenance |
+| `FAQ.md` | FAQ |
 
-## Publishing with Git
+## Publishing workflow
 
-After the wiki exists:
+The `Publish GitHub Wiki` workflow copies the contents of `docs/wiki/` to the separate GitHub Wiki repository. It can be run manually with `workflow_dispatch` and is configured to run after changes reach the Hermes Android branch.
 
-```bash
-git clone git@github.com:TojotheTerror/hermes-webui.wiki.git
-cp docs/wiki/*.md hermes-webui.wiki/
-cd hermes-webui.wiki
-git add .
-git commit -m "Initialize Hermes Android wiki"
-git push
-```
+## Manual publishing fallback
 
-Keep private machine names, private network details, credentials, tokens, cookies, API keys, and full local config dumps out of wiki pages.
+When workflow publishing is unavailable, copy every Markdown file from `docs/wiki/` into the wiki repository, including `_Sidebar.md` and `_Footer.md`, then commit and push the wiki repository.
+
+## Checkpoint workflow
+
+The `Hermes Android repository checkpoints` workflow validates the required issue forms, label manifest, wiki pages, wiki navigation, publishing workflow, and triage references.
+
+Keep private machine details and private configuration values out of wiki pages.
