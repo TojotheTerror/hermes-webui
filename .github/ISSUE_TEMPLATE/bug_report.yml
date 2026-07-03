@@ -1,0 +1,100 @@
+name: Bug report
+description: Report broken behavior in Hermes WebUI, the mobile/PWA surface, or Android access flow.
+title: "[Bug]: "
+labels:
+  - bug
+  - needs triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for reproducible defects. Do not include API keys, cookies, passwords, tokens, private URLs, or full `.env` / `auth.json` contents.
+
+  - type: dropdown
+    id: affected-area
+    attributes:
+      label: Affected area
+      description: Select the closest area.
+      options:
+        - Android browser / PWA
+        - Remote access / networking
+        - Authentication / session handling
+        - Chat / session UI
+        - File browser / terminal
+        - Onboarding / install
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What broke?
+      placeholder: Briefly describe the observed defect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide a minimal sequence that reproduces the issue.
+      placeholder: |
+        1. Start Hermes WebUI with ...
+        2. Open from Android via ...
+        3. Tap ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include only non-secret details.
+      value: |
+        - Android device / OS:
+        - Browser or wrapper:
+        - Hermes WebUI branch / commit:
+        - Host OS:
+        - Access method: local LAN / Tailscale / SSH tunnel / HTTPS reverse proxy / other
+        - Auth mode:
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs, screenshots, or traces
+      description: Paste redacted logs or attach screenshots. Remove secrets and private network details.
+      render: text
+
+  - type: checkboxes
+    id: safety-checks
+    attributes:
+      label: Safety and scope checks
+      options:
+        - label: I removed secrets, tokens, cookies, private URLs, and full config dumps.
+          required: true
+        - label: I confirmed this issue belongs in `TojotheTerror/hermes-webui`, not an upstream `NousResearch/*` repository.
+          required: true
+        - label: I am not asking for the full Hermes Agent runtime to run on Android unless explicitly marked as experimental local-runtime work.
+          required: true
