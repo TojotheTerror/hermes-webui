@@ -1,0 +1,61 @@
+name: Publish GitHub Wiki
+
+on:
+  push:
+    branches:
+      - Hermes-WebUI-Android
+    paths:
+      - "docs/wiki/**"
+      - ".github/scripts/check_hermes_android_repo_setup.py"
+      - ".github/workflows/publish-wiki.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-wiki-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish docs/wiki to GitHub Wiki
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate wiki source
+        run: python .github/scripts/check_hermes_android_repo_setup.py
+
+      - name: Publish wiki pages
+        env:
+          WIKI_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git
+        run: |
+          set -euo pipefail
+
+          rm -rf /tmp/hermes-webui-wiki
+          if git clone "$WIKI_URL" /tmp/hermes-webui-wiki; then
+            echo "Wiki repository cloned."
+          else
+            echo "Wiki clone failed; initializing a local wiki checkout."
+            mkdir -p /tmp/hermes-webui-wiki
+            git -C /tmp/hermes-webui-wiki init
+            git -C /tmp/hermes-webui-wiki checkout -B master
+            git -C /tmp/hermes-webui-wiki remote add origin "$WIKI_URL"
+          fi
+
+          find /tmp/hermes-webui-wiki -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R docs/wiki/. /tmp/hermes-webui-wiki/
+
+          git -C /tmp/hermes-webui-wiki config user.name "github-actions[bot]"
+          git -C /tmp/hermes-webui-wiki config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C /tmp/hermes-webui-wiki add .
+
+          if git -C /tmp/hermes-webui-wiki diff --cached --quiet; then
+            echo "Wiki already up to date."
+            exit 0
+          fi
+
+          git -C /tmp/hermes-webui-wiki commit -m "Publish Hermes Android wiki from ${GITHUB_SHA}"
+          git -C /tmp/hermes-webui-wiki push origin HEAD:master
