@@ -107,13 +107,13 @@ def check_wiki_pages() -> None:
         text = path.read_text(encoding="utf-8").strip()
         if not text:
             ERRORS.append(f"Wiki page is empty: {rel(path)}")
-        elif not (text.startswith("# ") or page in {"_Footer.md"}):
+        elif not (text.startswith("# ") or page == "_Footer.md"):
             ERRORS.append(f"Wiki page should start with an H1 heading: {rel(path)}")
 
     home = read("docs/wiki/Home.md")
     sidebar = read("docs/wiki/_Sidebar.md")
     for page in REQUIRED_WIKI_PAGES:
-        if page in {"Home.md", "_Footer.md"}:
+        if page in {"Home.md", "_Sidebar.md", "_Footer.md"}:
             continue
         wiki_name = page.removesuffix(".md")
         if wiki_name not in home and wiki_name not in sidebar:
@@ -131,7 +131,7 @@ def check_workflows() -> None:
     )
     require_contains(
         ".github/workflows/sync-labels.yml",
-        ["workflow_dispatch:", "sync_github_labels.py", "issues: write"],
+        ["workflow_dispatch:", "actions/github-script", "issues: write", ".github/labels.yml"],
     )
 
 
