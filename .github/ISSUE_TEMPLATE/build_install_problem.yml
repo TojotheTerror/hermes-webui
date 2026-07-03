@@ -1,0 +1,78 @@
+name: Build or install problem
+description: Report bootstrap, run, test, reinstall, PWA install, or Android access setup problems.
+title: "[Build/Install]: "
+labels:
+  - bug
+  - android
+  - needs triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Include commands and redacted output. Do not paste API keys, cookies, passwords, full `.env` files, full `auth.json` files, or private network details.
+
+  - type: dropdown
+    id: problem-area
+    attributes:
+      label: Problem area
+      options:
+        - Initial clone / bootstrap
+        - Start script / local run
+        - Test run
+        - Docker
+        - Reinstall / reset
+        - Android PWA install
+        - Remote access from Android
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or action
+      description: What command or UI action failed?
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Redacted output
+      description: Paste the relevant error output only.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - Host OS:
+        - Python version:
+        - Browser / Android device:
+        - Hermes WebUI branch / commit:
+        - Access method: local LAN / Tailscale / SSH tunnel / HTTPS reverse proxy / other
+        - Fresh install or existing state:
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempted-fixes
+    attributes:
+      label: Attempted fixes
+      description: What did you already try?
+
+  - type: checkboxes
+    id: install-checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I did not delete or overwrite real `~/.hermes` state without explicit approval.
+          required: true
+        - label: I removed secrets, tokens, cookies, private URLs, and full config dumps.
+          required: true
+        - label: I confirmed this belongs in `TojotheTerror/hermes-webui`, not upstream.
+          required: true
