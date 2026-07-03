@@ -30,11 +30,13 @@ Minimum labels:
 - `status:ready-for-codex`
 - `status:blocked`
 
+The `Sync GitHub labels` workflow keeps actual repository labels aligned with the manifest after merge.
+
 ## Triage sequence
 
 1. Confirm the issue belongs in `TojotheTerror/hermes-webui`.
-2. Confirm it does not require writes to `NousResearch/*` upstream repositories.
-3. Remove or redact secrets, tokens, cookies, private URLs, and private local-machine details.
+2. Confirm upstream `NousResearch/*` repositories stay read/reference only.
+3. Confirm the report is safe to keep public.
 4. Apply the appropriate type label: `bug`, `enhancement`, `documentation`, or `question`.
 5. Keep `needs triage` until scope, owner, and next step are clear.
 6. Add `android` for Android browser, PWA, wrapper, or mobile access work.
@@ -55,19 +57,20 @@ Before applying it, confirm:
 - human review gates are stated for auth, CSRF, service-worker caching, remote exposure, runtime/API boundaries, Android signing/distribution, or automation hooks
 - expected validation is named
 
-Codex must stop before any tool call, shell command, or Git operation that would write to an upstream `NousResearch/*` repository.
+Automation must stop before any action that would write to an upstream `NousResearch/*` repository.
+
+## Checkpoints
+
+The repository now has explicit checkpoints:
+
+- `Hermes Android repository checkpoints` validates issue forms, label manifest, wiki pages, workflow references, and triage documentation.
+- `Publish GitHub Wiki` publishes the reviewed `docs/wiki/` source pages to the GitHub Wiki.
+- `Sync GitHub labels` creates or updates actual repository labels from `.github/labels.yml`.
+
+Run the checkpoint workflow after changes to issue templates, labels, Hermes Android docs, wiki source pages, or publishing workflows. Correct the source files before publishing the wiki or marking the setup issue complete.
 
 ## Wiki publishing
 
-The staged wiki pages live in `docs/wiki/`. After review, copy them into the GitHub Wiki or push them to the separate wiki repository:
+The staged wiki pages live in `docs/wiki/`. After review, publish them into the GitHub Wiki with the repository workflow or by updating the separate wiki repository directly.
 
-```bash
-git clone git@github.com:TojotheTerror/hermes-webui.wiki.git
-cp docs/wiki/*.md hermes-webui.wiki/
-cd hermes-webui.wiki
-git add .
-git commit -m "Initialize Hermes Android wiki"
-git push
-```
-
-The wiki repository may not exist until the first wiki page is created in GitHub.
+The wiki repository may need to be initialized once before direct wiki publishing works consistently.
