@@ -43,6 +43,26 @@ Read/reference-only upstream repositories:
 Never push branches, commits, tags, issues, labels, pull requests, releases,
 workflow changes, or project metadata to upstream repositories.
 
+## Repository workflow
+
+GitHub Issues and Wiki are the public planning and documentation surfaces for
+this track.
+
+Issue intake starts from the templates in `.github/ISSUE_TEMPLATE/`:
+
+- bug report
+- feature request
+- documentation task
+- build/install problem
+
+The triage workflow and label meanings are defined in
+`docs/hermes-android/repository-triage.md`. The label manifest lives in
+`.github/labels.yml`; it includes the basic repo labels and the project-specific
+`status:ready-for-codex` readiness gate.
+
+Wiki seed pages live in `docs/wiki/`. Review them through normal pull requests,
+then publish them into the GitHub Wiki after the wiki repository exists.
+
 ## First milestones
 
 1. M0 — Project setup, guardrails, and environment readiness
