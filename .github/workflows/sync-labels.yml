@@ -1,0 +1,69 @@
+name: Sync GitHub labels
+
+on:
+  push:
+    branches:
+      - Hermes-WebUI-Android
+    paths:
+      - ".github/labels.yml"
+      - ".github/workflows/sync-labels.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sync-labels:
+    name: Sync labels from manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Sync labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const manifest = fs.readFileSync('.github/labels.yml', 'utf8');
+            const labels = [];
+            let current = null;
+            for (const raw of manifest.split(/\r?\n/)) {
+              const line = raw.trim();
+              if (!line || line.startsWith('#')) continue;
+              if (line.startsWith('- name:')) {
+                if (current) labels.push(current);
+                current = { name: line.split(':').slice(1).join(':').trim().replace(/^['\"]|['\"]$/g, '') };
+                continue;
+              }
+              if (!current || !line.includes(':')) continue;
+              const idx = line.indexOf(':');
+              const key = line.slice(0, idx).trim();
+              const value = line.slice(idx + 1).trim().replace(/^['\"]|['\"]$/g, '');
+              current[key] = value;
+            }
+            if (current) labels.push(current);
+
+            const [owner, repo] = context.repo.owner && context.repo.repo
+              ? [context.repo.owner, context.repo.repo]
+              : process.env.GITHUB_REPOSITORY.split('/');
+
+            for (const label of labels) {
+              const params = {
+                owner,
+                repo,
+                name: label.name,
+                color: label.color || 'ededed',
+                description: label.description || '',
+              };
+              try {
+                await github.rest.issues.updateLabel(params);
+                core.info(`updated label: ${label.name}`);
+              } catch (error) {
+                if (error.status !== 404) throw error;
+                await github.rest.issues.createLabel(params);
+                core.info(`created label: ${label.name}`);
+              }
+            }
+            core.info(`Synced ${labels.length} labels.`);
