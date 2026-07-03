@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Hermes Android / Mobile Client scope
+    url: https://github.com/TojotheTerror/hermes-webui/blob/Hermes-WebUI-Android/docs/hermes-android/README.md
+    about: Read the remote-first Android/PWA scope before opening implementation work.
+  - name: Upstream read-only policy
+    url: https://github.com/TojotheTerror/hermes-webui/blob/Hermes-WebUI-Android/docs/hermes-android/upstream-readonly-policy.md
+    about: Confirm this issue belongs in the writable TojotheTerror fork, not an upstream NousResearch repository.
