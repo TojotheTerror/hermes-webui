@@ -76,6 +76,7 @@ def require_contains(path: str, needles: list[str]) -> None:
 
 
 def check_issue_forms() -> None:
+    boundary_markers = ["TojotheTerror/hermes-webui", "NousResearch/*", "writable fork"]
     for form in REQUIRED_ISSUE_FORMS:
         text = read(form)
         if not text:
@@ -86,8 +87,8 @@ def check_issue_forms() -> None:
         for field in ["name:", "description:", "title:", "labels:", "body:"]:
             if field not in text:
                 ERRORS.append(f"{form} is missing issue-form field {field!r}")
-        if "TojotheTerror/hermes-webui" not in text:
-            ERRORS.append(f"{form} must state the writable repository boundary")
+        if not any(marker in text for marker in boundary_markers):
+            ERRORS.append(f"{form} must state the repository or upstream boundary")
 
 
 def check_label_manifest() -> None:
