@@ -1,0 +1,66 @@
+name: Documentation task
+description: Request or plan documentation for setup, architecture, troubleshooting, release notes, or the wiki.
+title: "[Docs]: "
+labels:
+  - documentation
+  - needs triage
+body:
+  - type: dropdown
+    id: docs-area
+    attributes:
+      label: Documentation area
+      options:
+        - Project setup
+        - Build / run instructions
+        - Architecture
+        - Contribution workflow
+        - Release notes
+        - Troubleshooting
+        - GitHub Wiki
+        - Hermes Android scope
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-gap
+    attributes:
+      label: Current gap
+      description: What is missing, unclear, stale, or incorrect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed documentation change
+      description: Describe the specific page, section, or example to add or update.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source-of-truth
+    attributes:
+      label: Source of truth
+      description: Link or name the code, doc, issue, PR, ADR, or release note that should drive the wording.
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - [ ] The target page is updated.
+        - [ ] Links are verified.
+        - [ ] No private machine details or secrets are included.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: docs-checks
+    attributes:
+      label: Documentation checks
+      options:
+        - label: This documentation belongs in the writable fork and does not require upstream metadata changes.
+          required: true
+        - label: The request does not include private local setup details, secrets, tokens, or private network identifiers.
+          required: true
